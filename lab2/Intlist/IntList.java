@@ -81,14 +81,15 @@ public class IntList {
      */
 
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
-
-        IntList res = A;
-        while (A.rest != null) {
-            A = A.rest;
+        if (A == null) {
+            return B;
         }
-        A.rest = B;
-        return res;
+        IntList ptrA = A;
+        while (ptrA.rest != null) {
+            ptrA = ptrA.rest;
+        }
+        ptrA.rest = B;
+        return A;
     }
 
     /**
@@ -96,16 +97,19 @@ public class IntList {
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
-        IntList res = new IntList(A.first, null);
-        IntList ptr = res;
-        A = A.rest;
-        while (A != null) {
-            ptr.rest = new IntList(A.first, null);
-            A = A.rest;
-            ptr = ptr.rest;
+        if (A == null) {
+            return B;
         }
-        ptr.rest = B;
-        return res;
+        IntList ptrA = A;
+        IntList res = new IntList(0, null);
+        IntList ptrRes = res;
+        while (ptrA != null) {
+            ptrRes.rest = new IntList(ptrA.first, null);
+            ptrRes = ptrRes.rest;
+            ptrA = ptrA.rest;
+        }
+        ptrRes.rest = B;
+        return res.rest;
     }
 
 
@@ -146,6 +150,7 @@ public class IntList {
      * as THIS. Cannot handle IntLists with cycles. You are not expected to
      * read or understand this method.
      */
+    @Override
     public boolean equals(Object x) {
         if (!(x instanceof IntList)) {
             return false;
@@ -231,4 +236,3 @@ public class IntList {
         return out.toString();
     }
 }
-
