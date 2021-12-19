@@ -17,13 +17,16 @@ public class ArrayDeque<T> {
         }
         T[] newArray = (T[]) new Object[newSize];
         int j = i;
+        int temp = front;
         while (i < size + j) {
-            if (front == capacity) {
-                front = 0;
+            if (temp == capacity) {
+                temp = 0;
             }
-            newArray[i++] = items[front++];
+            newArray[i++] = items[temp++];
         }
+        front = 0;
         items = newArray;
+        capacity = newSize;
     }
 
 
@@ -63,7 +66,7 @@ public class ArrayDeque<T> {
 
 
     public int size() {
-        return size + 1;
+        return size;
     }
 
 
@@ -87,9 +90,10 @@ public class ArrayDeque<T> {
         }
         size--;
         T temp = items[front];
-        if (front != capacity) {
+        items[front] = null;
+        if (front != capacity - 1) {
             front++;
-        } else {
+        } else if (items[0] == null) {
             front = 0;
         }
         return temp;
@@ -106,8 +110,14 @@ public class ArrayDeque<T> {
             items[size - 1] = null;
         } else {
             int index = (front + size) % capacity;
-            temp = items[index - 1];
-            items[index] = null;
+            if (index - 1 < 0) {
+                index = capacity - 1;
+                temp = items[index];
+                items[index] = null;
+            } else {
+                temp = items[index - 1];
+                items[index] = null;
+            }
         }
         size--;
         return temp;
