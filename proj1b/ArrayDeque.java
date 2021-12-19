@@ -1,4 +1,6 @@
-public class ArrayDeque<Item> {
+import java.util.AbstractList;
+
+public class ArrayDeque<Item> extends AbstractList<Item> implements Deque<Item> {
     private Item[] items;
     private int size;
     private int capacity = 8;

@@ -44,7 +44,23 @@ public class ArrayDequeTest {
         ArrayDeque test = new ArrayDeque();
         test.addLast(3);
         test.addLast(4);
-        int a = (int) test.get(1);
+        int a = (int) test.get(0);
         System.out.println(a);
+    }
+
+    @Test
+    public void test() {
+        ArrayDeque test = new ArrayDeque();
+        for (int i = 0; i < 10; i++) {
+            test.addFirst(i);
+        }
+        test.isEmpty();
+        int b = (int) test.get(1);
+        int c = (int) test.get(2);
+        test.size();
+
+        System.out.println(test.removeFirst());
+        System.out.println(test.removeLast());
+        test.addLast("A");
     }
 }
