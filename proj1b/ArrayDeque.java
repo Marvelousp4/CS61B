@@ -1,6 +1,4 @@
-import java.util.*;
-
-public class ArrayDeque<Item> extends ArrayList<Item> implements Deque<Item> {
+public class ArrayDeque<Item> {
     private Item[] items;
     private int size;
     private int capacity = 8;
@@ -15,34 +13,37 @@ public class ArrayDeque<Item> extends ArrayList<Item> implements Deque<Item> {
 
     public void resize(int newSize, int i) {
         Item[] newArray = (Item[]) new Object[newSize];
-        while (i < size) {
+        int j = i;
+        while (i < size + j) {
             if (front == capacity) {
                 front = 0;
             }
             newArray[i++] = items[front++];
         }
+        items = newArray;
     }
 
 
-    @Override
     public Item get(int index) {
         return items[index];
     }
 
-    @Override
+
     public void addFirst(Item item) {
-        if (capacity == items.length) {
+        if (capacity == size) {
             resize(capacity + 1, 1);
+            items[0] = item;
+            return;
         }
-        int index = (front - 1) % capacity;
+        int index = (front - 1 + capacity) % capacity;
         items[index] = item;
         size++;
         front = index;
     }
 
-    @Override
+
     public void addLast(Item item) {
-        if (capacity == items.length) {
+        if (capacity == size) {
             resize(capacity + 1, 0);
         }
         int index = (front + size) % capacity;
@@ -50,29 +51,31 @@ public class ArrayDeque<Item> extends ArrayList<Item> implements Deque<Item> {
         size++;
     }
 
-    @Override
+
     public boolean isEmpty() {
         return size == 0;
     }
 
-    @Override
+
     public int size() {
         return size;
     }
 
-    @Override
+
     public void printDeque() {
         int i = 0;
+        int temp = front;
         while (i < size) {
-            if (front == capacity) {
-                front = 0;
+            if (temp == capacity) {
+                temp = 0;
             }
-            System.out.println(items[front++]);
+            System.out.printf("%d ", items[temp++]);
             i++;
         }
+        System.out.println();
     }
 
-    @Override
+
     public Item removeFirst() {
         size--;
         Item temp = items[front];
@@ -84,11 +87,19 @@ public class ArrayDeque<Item> extends ArrayList<Item> implements Deque<Item> {
         return temp;
     }
 
-    @Override
+
     public Item removeLast() {
-        int index = (front + size - 1) % capacity;
+        Item temp;
+        if (front == 0) {
+            temp = items[size - 1];
+            items[size - 1] = null;
+        }
+        else {
+            int index = (front + size) % capacity;
+            temp = items[index - 1];
+            items[index] = null;
+        }
         size--;
-        Item temp = items[index];
         return temp;
     }
 }

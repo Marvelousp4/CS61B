@@ -1,18 +1,18 @@
-public class ArrayDeque<Item> {
-    private Item[] items;
+public class ArrayDeque<T> {
+    private T[] items;
     private int size;
     private int capacity = 8;
     private int front;
 
 
     public ArrayDeque() {
-        items = (Item[]) new Object[capacity];
+        items = (T[]) new Object[capacity];
         front = 0;
         size = 0;
     }
 
-    public void resize(int newSize, int i) {
-        Item[] newArray = (Item[]) new Object[newSize];
+    private void resize(int newSize, int i) {
+        T[] newArray = (T[]) new Object[newSize];
         int j = i;
         while (i < size + j) {
             if (front == capacity) {
@@ -24,12 +24,12 @@ public class ArrayDeque<Item> {
     }
 
 
-    public Item get(int index) {
+    public T get(int index) {
         return items[index];
     }
 
 
-    public void addFirst(Item item) {
+    public void addFirst(T item) {
         if (capacity == size) {
             resize(capacity + 1, 1);
             items[0] = item;
@@ -42,7 +42,7 @@ public class ArrayDeque<Item> {
     }
 
 
-    public void addLast(Item item) {
+    public void addLast(T item) {
         if (capacity == size) {
             resize(capacity + 1, 0);
         }
@@ -76,9 +76,9 @@ public class ArrayDeque<Item> {
     }
 
 
-    public Item removeFirst() {
+    public T removeFirst() {
         size--;
-        Item temp = items[front];
+        T temp = items[front];
         if (front != capacity) {
             front++;
         } else {
@@ -88,13 +88,12 @@ public class ArrayDeque<Item> {
     }
 
 
-    public Item removeLast() {
-        Item temp;
+    public T removeLast() {
+        T temp;
         if (front == 0) {
             temp = items[size - 1];
             items[size - 1] = null;
-        }
-        else {
+        } else {
             int index = (front + size) % capacity;
             temp = items[index - 1];
             items[index] = null;
