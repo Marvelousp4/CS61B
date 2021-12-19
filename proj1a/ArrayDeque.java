@@ -17,12 +17,11 @@ public class ArrayDeque<T> {
         }
         T[] newArray = (T[]) new Object[newSize];
         int j = i;
-        int temp = front;
         while (i < size + j) {
-            if (temp == capacity) {
-                temp = 0;
+            if (front == capacity) {
+                front = 0;
             }
-            newArray[i++] = items[temp++];
+            newArray[i++] = items[front++];
         }
         items = newArray;
     }
